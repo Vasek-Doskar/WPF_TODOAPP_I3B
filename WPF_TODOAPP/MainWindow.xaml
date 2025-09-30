@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_TODOAPP"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Background="#6c2977"
+        WindowStyle="None"
+        Foreground="White"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Title="MainWindow" Height="450" Width="300">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" 
+                      ResizeBorderThickness="3"/>
+    </WindowChrome.WindowChrome>
+    
     <Grid>
+        <ListBox x:Name="ToDoListBox" Width="250" Height="400" Background="#844A8A">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Background="#9D008A">
+                        <TextBlock Text="{Binding Title}" Foreground="White" />
+                        <CheckBox IsChecked="{Binding IsDone}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </Grid>
 </Window>
