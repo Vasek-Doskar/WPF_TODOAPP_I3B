@@ -6,12 +6,7 @@ namespace WPF_TODOAPP.Models
     {
         private bool _isDone;
 
-        public ToDoEntity(string title, bool isDone = false)
-        {
-            IsDone = isDone;
-            Title = title;
-        }
-
+        public int Id { get; set; }
         public bool IsDone
         {
             get => _isDone;

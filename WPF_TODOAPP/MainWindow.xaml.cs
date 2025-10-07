@@ -19,6 +19,13 @@ namespace WPF_TODOAPP
         public MainWindow()
         {
             InitializeComponent();
+            (this.Content as Grid).MouseLeftButtonDown += (s, e) =>
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    this.DragMove();
+                }
+            };
         }
     }
 }
