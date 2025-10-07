@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPF_TODOAPP.Database;
+﻿using WPF_TODOAPP.Database;
 
 namespace WPF_TODOAPP.Models
 {
-    class ContextManager // Create Read Update Delete
+    public class ContextManager // Create Read Update Delete
     {
         private readonly ToDoContext _context;
 
