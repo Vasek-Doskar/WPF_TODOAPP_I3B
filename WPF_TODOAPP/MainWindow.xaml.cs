@@ -20,7 +20,7 @@ namespace WPF_TODOAPP
             ContextManager = new ContextManager(context);
 
             InitializeComponent();
-
+            ToDoListBox.ItemsSource = ContextManager.GetAll();
             (this.Content as Grid)!.MouseLeftButtonDown += (s, e) =>
             {
 
