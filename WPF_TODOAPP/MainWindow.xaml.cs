@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPF_TODOAPP.Database;
@@ -13,14 +14,15 @@ namespace WPF_TODOAPP
     public partial class MainWindow : Window
     {
         public ContextManager ContextManager { get; set; }
+        public ObservableCollection<ToDoEntity> ToDoList { get; set; }
         NewFileWindow newTodoWindow;
         public MainWindow()
         {
             ToDoContext context = new();
             ContextManager = new ContextManager(context);
-
+            ToDoList = new ObservableCollection<ToDoEntity>(ContextManager.GetAll());
             InitializeComponent();
-            RefreshList();
+            ToDoListBox.ItemsSource = ToDoList;
         }
 
         private void AddNewToDo(object sender, RoutedEventArgs e)
@@ -28,7 +30,8 @@ namespace WPF_TODOAPP
             newTodoWindow = new(ContextManager);
             newTodoWindow.Closed += (s, e) =>
             {
-                RefreshList();
+                ToDoList.Clear();
+                ContextManager.GetAll().ForEach(x => ToDoList.Add(x));
             };
             newTodoWindow.ShowDialog();
         }
@@ -39,26 +42,16 @@ namespace WPF_TODOAPP
             if (Selected != null)
             {
                 ContextManager.Remove(Selected);
-                RefreshList();
+                ToDoList.Remove(Selected);
             }
-        }
-
-        private void RefreshList()
-        {
-            ToDoListBox.ItemsSource = null;
-            ToDoListBox.ItemsSource = ContextManager.GetAll();
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CheckBox cbox = sender as CheckBox;
-            int id = (int)cbox.DataContext;
-            ToDoEntity? Upgradable = ContextManager.GetById(id);
-
-            if (Upgradable != null)
+           if(sender is CheckBox cbox && cbox.DataContext is ToDoEntity todo)
             {
-                Upgradable.IsDone = cbox.IsChecked.Value;
-                ContextManager.Update(Upgradable);
+                todo.IsDone = cbox.IsChecked == true;
+                ContextManager.Update(todo);
             }
         }
     }

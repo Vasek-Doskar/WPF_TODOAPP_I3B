@@ -1,4 +1,5 @@
-﻿using WPF_TODOAPP.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using WPF_TODOAPP.Database;
 
 namespace WPF_TODOAPP.Models
 {
