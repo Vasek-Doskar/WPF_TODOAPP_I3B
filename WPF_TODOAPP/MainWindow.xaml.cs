@@ -20,25 +20,46 @@ namespace WPF_TODOAPP
             ContextManager = new ContextManager(context);
 
             InitializeComponent();
+            RefreshList();
+        }
+
+        private void AddNewToDo(object sender, RoutedEventArgs e)
+        {
+            newTodoWindow = new(ContextManager);
+            newTodoWindow.Closed += (s, e) =>
+            {
+                RefreshList();
+            };
+            newTodoWindow.ShowDialog();
+        }
+
+        private void RemoveSelectedTodo(object sender, RoutedEventArgs e)
+        {
+            ToDoEntity? Selected = ToDoListBox.SelectedItem as ToDoEntity;
+            if (Selected != null)
+            {
+                ContextManager.Remove(Selected);
+                RefreshList();
+            }
+        }
+
+        private void RefreshList()
+        {
+            ToDoListBox.ItemsSource = null;
             ToDoListBox.ItemsSource = ContextManager.GetAll();
-            (this.Content as Grid)!.MouseLeftButtonDown += (s, e) =>
-            {
+        }
 
-                if (e.ChangedButton == MouseButton.Left)
-                {
-                    try
-                    {
-                        this.DragMove();
-                    }
-                    catch { }
-                }
-            };
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox cbox = sender as CheckBox;
+            int id = (int)cbox.DataContext;
+            ToDoEntity? Upgradable = ContextManager.GetById(id);
 
-            ToDoListBox.MouseDoubleClick += (s, e) =>
+            if (Upgradable != null)
             {
-                newTodoWindow = new(ContextManager);
-                newTodoWindow.ShowDialog();
-            };
+                Upgradable.IsDone = cbox.IsChecked.Value;
+                ContextManager.Update(Upgradable);
+            }
         }
     }
 }

@@ -6,28 +6,38 @@
         xmlns:local="clr-namespace:WPF_TODOAPP"
         mc:Ignorable="d"
         Background="#6c2977"
-        WindowStyle="None"
         Foreground="White"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
         Title="MainWindow" Height="450" Width="300">
 
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" 
-                      ResizeBorderThickness="3"/>
-    </WindowChrome.WindowChrome>
-    
+
+
     <Grid>
-        <ListBox x:Name="ToDoListBox" Width="250" Height="400" Background="#844A8A">
+        <ListBox x:Name="ToDoListBox" Width="250" Height="300" Background="#844A8A" Margin="25,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Background="#9D008A">
                         <TextBlock Text="{Binding Title}" Foreground="White" />
-                        <CheckBox IsChecked="{Binding IsDone}"/>
+                        <CheckBox IsChecked="{Binding IsDone}" Checked="CheckBox_Checked" DataContext="{Binding Id}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <Button Content="Přidat"
+                Click="AddNewToDo"
+                HorizontalAlignment="Left" 
+                Margin="25,357,0,0"
+                VerticalAlignment="Top"
+                Width="60"/>
+        
+        <Button Content="Odebrat" 
+                Click="RemoveSelectedTodo"
+                HorizontalAlignment="Left"
+                Margin="107,357,0,0"
+                VerticalAlignment="Top"
+                Width="57"/>
 
     </Grid>
 </Window>
