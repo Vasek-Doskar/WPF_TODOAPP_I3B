@@ -19,7 +19,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Background="#9D008A">
                         <TextBlock Text="{Binding Title}" Foreground="White" />
-                        <CheckBox IsChecked="{Binding IsDone}" Checked="CheckBox_Checked" DataContext="{Binding Id}"/>
+                        <CheckBox IsChecked="{Binding IsDone, Mode=TwoWay}" Unchecked="CheckBox_Checked" Checked="CheckBox_Checked"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
